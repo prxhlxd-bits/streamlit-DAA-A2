@@ -82,16 +82,20 @@ data = {
     "Dataset": ["AS733", "AS733", "AS733", "AS733", "AS733", 
                 "Netscience", "Netscience", "Netscience", "Netscience", "Netscience", 
                 "CaHepTh", "CaHepTh", "CaHepTh", "CaHepTh", "CaHepTh"],
-    "h": [2, 3, 4, 5, 6, 2, 3, 4, 5, 6, 2, 3, 4, 5, 6],
+    "h": [2, 3, 4, 5, 6, 
+          2, 3, 4, 5, 6, 
+          2, 3, 4, 5, 6],
     "Density": [8.875, 35.9091, 85.125, 126.767, 123.393, 
                 9.5, 57, 242.25, 775.2, 1938, 
                 15.5, 124.714, 587.99, 2873.51, 11689.4],
     "Time_EXACT": [46.7817, 55.4167, 70.4739, 116.448, 119.57, 
-                   0.521326, 0.681457, 0.981387, 1.73257, 4.12113, 
-                   27.3634, 44.8106, 61.3247, 146.206, 529.803],
-    "Time_CORE_EXACT": [46.7817, 18.2292, 16.5829, 23.2603, 16.0793, 
-                        0.495, 3.021, 19.024, 141.442, 302.564, 
-                        27.3634, 201.888, 61.3247, 146.206, 529.803]
+                   0.4, 0.988, 5.287, 34.2815, 210.07, 
+                    19.659, 66.607, 208.59, 438.623, 1815.832
+                   ],
+    "Time_CORE_EXACT": [24.19, 8.471, 8.177, 7.966, 4.834, 
+                        0.521326, 0.681457, 0.981387, 1.73257, 4.12113, 
+                   27.3634, 44.8106, 61.3247, 146.206, 529.803
+                        ]
 }
 
 # Create a dataframe for easier manipulation
@@ -588,7 +592,7 @@ else:  # Performance Comparison
     
     # Dataset filter for visualizations
     dataset_filter = st.selectbox("Select Dataset for Visualization", 
-                                 ["All Datasets", "AS733", "Netscience", "CaHepTh"])
+                                 [ "AS733", "Netscience", "CaHepTh" , "All Datasets"])
     
     if dataset_filter == "All Datasets":
         filtered_df = comparison_df

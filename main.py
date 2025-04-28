@@ -22,7 +22,7 @@ st.markdown("""
     .main-header {
         font-size: 42px;
         font-weight: bold;
-        color: #1E3A8A;
+
         margin-bottom: 20px;
         text-align: center;
     }
@@ -45,7 +45,6 @@ st.markdown("""
         font-weight: bold;
     }
     .info-box {
-        background-color: #DBEAFE;
         padding: 15px;
         border-radius: 5px;
         margin: 10px 0;
@@ -203,67 +202,10 @@ if page == "Home - Graph Demo":
     
     st.markdown("""
     <div class="info-box">
-    This interactive demo illustrates the concept of Densest Subgraph Discovery, a fundamental problem in graph mining. 
+    This website illustrates the concept of Densest Subgraph Discovery, a fundamental problem in graph mining. 
     The goal is to find a subgraph with the highest density, measured by the ratio of edges to vertices.
     </div>
     """, unsafe_allow_html=True)
-    
-    # Graph parameters
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        n_nodes = st.slider("Number of nodes", 5, 20, 10)
-    with col2:
-        edge_probability = st.slider("Edge probability", 0.1, 0.9, 0.3, 0.1)
-    with col3:
-        random_seed = st.slider("Random seed", 1, 100, 42)
-    
-    # Generate graph
-    G = generate_sample_graph(n=n_nodes, p=edge_probability, seed=random_seed)
-    
-    # Select algorithm
-    algorithm = st.radio("Select algorithm", ["EXACT", "CORE_EXACT"])
-    
-    # Run algorithm button
-    if st.button("Find Densest Subgraph"):
-        with st.spinner("Finding densest subgraph..."):
-            start_time = time.time()
-            if algorithm == "EXACT":
-                densest_nodes = find_exact_eds(G)
-            else:
-                densest_nodes = find_core_exact_eds(G)
-            elapsed_time = time.time() - start_time
-            
-            # Compute density
-            density = compute_edge_density(G, densest_nodes)
-            
-            # Display results
-            st.success(f"Found densest subgraph with {len(densest_nodes)} nodes and density {density:.4f} in {elapsed_time:.4f} seconds")
-            
-            # Create visualization
-            fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 7))
-            
-            # Original graph
-            pos = nx.spring_layout(G, seed=random_seed)
-            nx.draw(G, pos=pos, with_labels=True, node_color='lightblue', 
-                    node_size=500, font_weight='bold', ax=ax1)
-            ax1.set_title("Original Graph")
-            
-            # Densest subgraph
-            node_colors = ['red' if node in densest_nodes else 'lightblue' for node in G.nodes()]
-            nx.draw(G, pos=pos, with_labels=True, node_color=node_colors, 
-                    node_size=500, font_weight='bold', ax=ax2)
-            ax2.set_title("Densest Subgraph Highlighted")
-            
-            st.pyplot(fig)
-    else:
-        # Just show the original graph
-        fig, ax = plt.subplots(figsize=(10, 8))
-        pos = nx.spring_layout(G, seed=random_seed)
-        nx.draw(G, pos=pos, with_labels=True, node_color='lightblue', 
-                node_size=500, font_weight='bold', ax=ax)
-        ax.set_title("Original Graph")
-        st.pyplot(fig)
-    
     # Explanation of density
     with st.expander("What is Edge Density?"):
         st.markdown("""
@@ -278,43 +220,78 @@ if page == "Home - Graph Demo":
         A higher edge density indicates a more tightly connected structure. The densest subgraph problem aims to find the subgraph with the maximum edge density.
         """)
 
+    st.markdown("""
+                """)
+    # Graph parameters
+    # col1, col2, col3 = st.columns(3)
+    # with col1:
+    #     n_nodes = st.slider("Number of nodes", 5, 20, 10)
+    # with col2:
+    #     edge_probability = st.slider("Edge probability", 0.1, 0.9, 0.3, 0.1)
+    # with col3:
+    #     random_seed = st.slider("Random seed", 1, 100, 42)
+    
+    # # Generate graph
+    # G = generate_sample_graph(n=n_nodes, p=edge_probability, seed=random_seed)
+    
+    # # Select algorithm
+    # algorithm = st.radio("Select algorithm", ["EXACT", "CORE_EXACT"])
+    
+    # # Run algorithm button
+    # if st.button("Find Densest Subgraph"):
+    #     with st.spinner("Finding densest subgraph..."):
+    #         start_time = time.time()
+    #         if algorithm == "EXACT":
+    #             densest_nodes = find_exact_eds(G)
+    #         else:
+    #             densest_nodes = find_exact_eds(G)
+    #         elapsed_time = time.time() - start_time
+            
+    #         # Compute density
+    #         density = compute_edge_density(G, densest_nodes)
+            
+    #         # Display results
+    #         st.success(f"Found densest subgraph with {len(densest_nodes)} nodes and density {density:.4f} in {elapsed_time:.4f} seconds")
+            
+    #         # Create visualization
+    #         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 7))
+            
+    #         # Original graph
+    #         pos = nx.spring_layout(G, seed=random_seed)
+    #         nx.draw(G, pos=pos, with_labels=True, node_color='lightblue', 
+    #                 node_size=500, font_weight='bold', ax=ax1)
+    #         ax1.set_title("Original Graph")
+            
+    #         # Densest subgraph
+    #         node_colors = ['red' if node in densest_nodes else 'lightblue' for node in G.nodes()]
+    #         nx.draw(G, pos=pos, with_labels=True, node_color=node_colors, 
+    #                 node_size=500, font_weight='bold', ax=ax2)
+    #         ax2.set_title("Densest Subgraph Highlighted")
+            
+    #         st.pyplot(fig)
+    # else:
+    #     # Just show the original graph
+    #     fig, ax = plt.subplots(figsize=(10, 8))
+    #     pos = nx.spring_layout(G, seed=random_seed)
+    #     nx.draw(G, pos=pos, with_labels=True, node_color='lightblue', 
+    #             node_size=500, font_weight='bold', ax=ax)
+    #     ax.set_title("Original Graph")
+    #     st.pyplot(fig)
+    
+    
+
 # CORE_EXACT ALGORITHM PAGE
 elif page == "CORE_EXACT Algorithm":
-    st.markdown('<div class="main-header">CORE_EXACT Algorithm</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header">Core Exact Algorithm</div>', unsafe_allow_html=True)
     
     st.markdown("""
     <div class="sub-header">Algorithm Overview</div>
-    <div class="algorithm-box">
+    <div class="info-box">
     The CORE_EXACT algorithm is an optimization of the EXACT algorithm that uses core decomposition to reduce the search space. It first identifies the (k, Ψ)-core of the graph, which contains the densest subgraph, and then applies the flow-based technique only on this smaller subgraph.
     </div>
     """, unsafe_allow_html=True)
     
-    # Display the algorithm pseudo-code
-    st.markdown('<div class="sub-header">Pseudo-code</div>', unsafe_allow_html=True)
-    st.image("https://api.placeholder.com/800/300", caption="Algorithm 4: The CORE_EXACT Algorithm")
-    
-    st.markdown("""
-    <div class="sub-header">Key Steps</div>
-    1. **Core Decomposition**: Find the clique-degree of each vertex and identify the k-cores
-    2. **Locate optimal core**: Find the (k'', Ψ)-core using pruning criteria
-    3. **Process connected components**: For each connected component in the core
-    4. **Flow Network Construction**: Build a flow network similar to EXACT but on smaller subgraphs
-    5. **Binary Search**: Perform binary search to find the optimal density threshold
-    6. **Return**: The subgraph with the highest density
-    """, unsafe_allow_html=True)
-    
-    # Theoretical complexity
-    st.markdown('<div class="sub-header">Time Complexity</div>', unsafe_allow_html=True)
-    st.markdown("""
-    The time complexity of CORE_EXACT algorithm is significantly lower than EXACT due to:
-    
-    - Reduced search space from core decomposition
-    - Smaller flow networks to process
-    - Tighter bounds on binary search ranges
-    
-    For practical graphs, this results in substantially faster computation times, especially for larger h values.
-    """)
-    
+
     # Display performance data
     st.markdown('<div class="sub-header">Performance Data</div>', unsafe_allow_html=True)
     
@@ -326,12 +303,13 @@ elif page == "CORE_EXACT Algorithm":
     st.write("Runtime results for CORE_EXACT algorithm across different datasets and h values:")
     st.dataframe(core_exact_df)
     
+
     # Create runtime histogram
     st.markdown('<div class="sub-header">Runtime Visualization</div>', unsafe_allow_html=True)
     
     # Filter by dataset
     dataset_filter = st.selectbox("Select Dataset for Visualization", 
-                                 ["All Datasets", "AS733", "Netscience", "CaHepTh"], 
+                                 [ "Netscience", "CaHepTh" , "AS733"], 
                                  key="core_exact_dataset")
     
     if dataset_filter == "All Datasets":
@@ -366,6 +344,8 @@ elif page == "CORE_EXACT Algorithm":
     plt.tight_layout()
     st.pyplot(fig)
     
+
+    
     # Additional plot for density vs h
     st.markdown('<div class="sub-header">Density vs Clique Size</div>', unsafe_allow_html=True)
     
@@ -386,6 +366,30 @@ elif page == "CORE_EXACT Algorithm":
     
     plt.tight_layout()
     st.pyplot(fig)
+
+    
+    st.markdown("""
+    ### Key Steps
+    1. **Core Decomposition**: Find the clique-degree of each vertex and identify the k-cores
+    2. **Locate optimal core**: Find the (k'', Ψ)-core using pruning criteria
+    3. **Process connected components**: For each connected component in the core
+    4. **Flow Network Construction**: Build a flow network similar to EXACT but on smaller subgraphs
+    5. **Binary Search**: Perform binary search to find the optimal density threshold
+    6. **Return**: The subgraph with the highest density
+    """)
+
+    
+    # Theoretical complexity
+    st.markdown('<div class="sub-header">Time Complexity</div>', unsafe_allow_html=True)
+    st.markdown("""
+    The time complexity of Core Exact algorithm is significantly lower than Exact due to:
+    
+    - Reduced search space from core decomposition
+    - Smaller flow networks to process
+    - Tighter bounds on binary search ranges
+    
+    For practical graphs, this results in substantially faster computation times, especially for larger h values.
+    """)
     
     # Implementation details
     with st.expander("Implementation Details"):
@@ -443,21 +447,18 @@ elif page == "CORE_EXACT Algorithm":
 
 # EXACT ALGORITHM PAGE
 elif page == "EXACT Algorithm":
-    st.markdown('<div class="main-header">EXACT Algorithm</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-header">Exact Algorithm</div>', unsafe_allow_html=True)
     
     st.markdown("""
     <div class="sub-header">Algorithm Overview</div>
-    <div class="algorithm-box">
+    <div class="info-box">
     The EXACT algorithm solves the Densest Subgraph Discovery problem using a flow-based approach. It constructs a specialized flow network and performs binary search over possible density thresholds to find the optimal subgraph efficiently.
     </div>
     """, unsafe_allow_html=True)
-    
-    # Display the algorithm pseudo-code
-    st.markdown('<div class="sub-header">Pseudo-code</div>', unsafe_allow_html=True)
-    st.image("https://api.placeholder.com/800/300", caption="Algorithm 1: The EXACT Algorithm")
+
     
     st.markdown("""
-    <div class="sub-header">Key Steps</div>
+    ### Key Steps
     1. **Initialization**: Set lower and upper bounds for the density parameter
     2. **Flow Network Construction**: Build a flow network with source s, sink t, vertices, and clique instances
     3. **Edge Capacity Assignment**: Set capacities based on vertex degrees and density parameter α
@@ -468,7 +469,7 @@ elif page == "EXACT Algorithm":
     # Theoretical complexity
     st.markdown('<div class="sub-header">Time Complexity</div>', unsafe_allow_html=True)
     st.markdown("""
-    The time complexity of the EXACT algorithm for edge-based densest subgraph (h=2) is:
+    The time complexity of the Exact algorithm for edge-based densest subgraph (h=2) is:
 
     $$O((mn + m^3) \log n)$$
 
@@ -495,7 +496,7 @@ elif page == "EXACT Algorithm":
     
     # Filter by dataset
     dataset_filter = st.selectbox("Select Dataset for Visualization", 
-                                 ["All Datasets", "AS733", "Netscience", "CaHepTh"], 
+                                 [ "AS733", "Netscience", "CaHepTh" , "All Datasets"], 
                                  key="exact_dataset")
     
     if dataset_filter == "All Datasets":
@@ -550,10 +551,6 @@ elif page == "EXACT Algorithm":
     
     plt.tight_layout()
     st.pyplot(fig)
-    
-    # Flow network visualization
-    st.markdown('<div class="sub-header">Flow Network Visualization</div>', unsafe_allow_html=True)
-    st.image("https://api.placeholder.com/800/400", caption="Figure 2: Illustrating the flow network (Ψ is a triangle)")
     
     with st.expander("Understanding the Flow Network"):
         st.markdown("""
